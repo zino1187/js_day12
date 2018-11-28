@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>이퀄라이저</title>
+<style>
+#stage{
+	width:600px;
+	height:500px;
+	background:yellow;
+	margin:auto;
+}
+</style>
+<script src="./Rect.js"></script>
+<script src="../lib/common.js"></script>
+<script>
+//ex) 2,7 -->  2~~6까지 나온다
+function getRandomByRange(min, max){
+	return parseInt(Math.random()*(max-min))+min;
+}
+var result=getRandomByRange(5,8);
+document.write(result);
+
+var stage;
+var color=["red","orange","yellow","green","blue","navy","purple"];
+
+function init(){
+	stage=document.getElementById("stage");
+	createRect();
+}
+function createRect(){
+	var c=getRandom(color.length);
+
+	var rect = new Rect(stage, color[c], targetH);
+}
+function gameLoop(){
+	setTimeout("gameLoop()",10);
+}
+addEventListener("load",function(){
+	init();
+});
+</script>
+</head>
+<body>
+	<div id="stage"></div>
+</body>
+</html>
