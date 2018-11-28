@@ -40,13 +40,19 @@ input{
 <script src="./Student.js"></script>
 <script>
 var studentArray=new Array();
-var m_name,loc,money;
+var m_name,loc,money;//입력폼 양식
+var t_name,t_loc,t_money;//상세보기 폼양식
 var list_area;
+var selectedIndex=0;//유저가 지금 선택한 인덱스
 
 function init(){
 	m_name=document.getElementById("m_name");
 	loc=document.getElementById("loc");
 	money=document.getElementById("money");
+	t_name=document.getElementById("t_name");
+	t_loc=document.getElementById("t_loc");
+	t_money=document.getElementById("t_money");
+
 	list_area=document.getElementById("list_area");
 }
 //등록버튼을 눌렀을때, 한 사람을 등록한다!!!
@@ -59,8 +65,12 @@ function regist(){
 }
 
 //선택된, 한 사람에 대한 정보를 얻는 함수!!
-function getDetail(name, loc, money){
-	alert(name +","+ loc +","+ money);
+function getDetail(index,name, loc, money){
+	//alert(name +","+ loc +","+ money);
+	selectedIndex=index;//
+	t_name.value=name;
+	t_loc.value=loc;
+	t_money.value=money;
 }
 //목록 처리 함수 
 function getList(){
@@ -79,7 +89,7 @@ function getList(){
 	str+="</tr>";
 	for(var i=studentArray.length-1;i>=0;i--){
 		var student=studentArray[i];//배열에서 끄집어 내기
-		str+="<tr onClick=\"getDetail('"+student.name+"' , '"+student.loc+"' , "+student.money+")\">";
+		str+="<tr onClick=\"getDetail("+i+",'"+student.name+"' , '"+student.loc+"' , "+student.money+")\">";
 		str+="<td>"+i+"</td>";
 		str+="<td>"+student.name+"</td>";
 		str+="<td>"+student.loc+"</td>";
@@ -88,6 +98,30 @@ function getList(){
 	}
 	str+="</table>";
 	list_area.innerHTML=str;
+}
+//삭제란? 객체의 인스턴스 자체를 제거하는게 아니라,
+//해당 인스턴스가 들어있는 배열요소에서 제거하자는 거임
+//따라서 지우려면, 선택한 인스턴스가 몇번째 배열에 
+//들어있었는지만 알면 된다!!
+function del(){
+	//.splice(몇번째부터, 몇개);
+	//alert("당신의 선택은 "+ans);
+	if(confirm("삭제할래요?")){
+		studentArray.splice(selectedIndex,1);
+		getList();//목록 갱신!!
+	}
+}
+//지금 보고있는 객체가 배열의 몇번째에 들어있는지를
+//조사하여, 해당 객체를 접근한 후 그 객체가 보유한 
+//속성값을 바꾸면 된다!!
+function edit(){
+	if(confirm("수정하시겠습니까?")){
+		var student=studentArray[selectedIndex];
+		student.name=t_name.value;
+		student.loc=t_loc.value;
+		student.money=t_money.value;
+		getList();
+	}
 }
 
 addEventListener("load", function(){
@@ -118,8 +152,8 @@ addEventListener("load", function(){
 			<input type="text" placeholder="이름" id="t_name"/>
 			<input type="text" placeholder="지역" id="t_loc"/>
 			<input type="text" placeholder="낸돈" id="t_money"/>
-			<button>삭제</button>
-			<button>수정</button>
+			<button onClick="del()">삭제</button>
+			<button onClick="edit()">수정</button>
 		</div>
 	<div>
 </body>
