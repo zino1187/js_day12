@@ -10,6 +10,7 @@ class Rect{
 		this.div.style.width=60+"px";
 		this.div.style.height=20+"px";
 		this.div.style.background=color;
+		this.div.float="left";
 		container.appendChild(this.div);
 	}
 	move(){

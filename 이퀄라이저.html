@@ -19,7 +19,7 @@ document.write(result);
 
 var stage;
 var color=["red","orange","yellow","green","blue","navy","purple"];
-var rect;
+var rectArray=[];
 
 function init(){
 	stage=document.getElementById("stage");
@@ -28,9 +28,11 @@ function init(){
 	setTarget();
 }
 function createRect(){
-	var c=getRandom(color.length);
-	var t=getRandomByRange(20,501);
-	rect = new Rect(stage, color[c], t);
+	for(var i=0;i<10;i++){
+		var c=getRandom(color.length);
+		var t=getRandomByRange(20,501);
+		rectArray[i]= new Rect(stage, color[c], t);
+	}
 }
 //오직, 현재 문서에 등장한 사각형의 목표지점인 targetH 값을 
 //랜덤하게 지정한다!!!
@@ -39,7 +41,9 @@ function setTarget(){
 	setTimeout("setTarget()",300);
 }
 function gameLoop(){
-	rect.move();
+	for(var i=0;i<rectArray.length;i++){
+		rect[i].move();
+	}
 	setTimeout("gameLoop()",10);
 }
 addEventListener("load",function(){
