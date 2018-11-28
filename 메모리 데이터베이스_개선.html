@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>메모리 데이터베이스</title>
+<style>
+.wrapper{
+	width:900px;
+	height:600px;
+	margin:auto;
+}
+.input_area{
+	width:150px;
+	height:100%;
+	float:left;
+}
+.content{
+	width:600px;
+	height:100%;
+	float:left;
+}
+.detail_area{
+	width:150px;
+	height:100%;
+	float:left;
+}
+.search_area{
+	width:100%;
+	height:40px;
+}
+#list_area{
+	width:100%;
+	height:560px;
+}
+input{
+	width:90%;
+	font-size:25px;
+}
+</style>
+<script src="./Student.js"></script>
+<script>
+var studentArray=new Array();
+var m_name,loc,money;
+var list_area;
+
+function init(){
+	m_name=document.getElementById("m_name");
+	loc=document.getElementById("loc");
+	money=document.getElementById("money");
+	list_area=document.getElementById("list_area");
+}
+//등록버튼을 눌렀을때, 한 사람을 등록한다!!!
+function regist(){
+	//클래스로부터 인스턴스 1개를 생성한다(공 디스크)
+	var student=new Student(m_name.value, loc.value, money.value);
+
+	studentArray.push(student);//한 사람 등록\
+	getList();
+}
+
+//선택된, 한 사람에 대한 정보를 얻는 함수!!
+function getDetail(name, loc, money){
+	alert(name +","+ loc +","+ money);
+}
+//목록 처리 함수 
+function getList(){
+	//console에서 목록의 내용을 출력해보자!!
+	var student=studentArray[0];
+	console.log(student.name,student.loc,student.money);
+
+	//테이블로 출력하자!!
+	var str="";
+	str+="<table width='100%' border='1px'>";
+	str+="<tr>";
+	str+="<td>No</td>";
+	str+="<td>이름</td>";
+	str+="<td>지역</td>";
+	str+="<td>낸돈</td>";
+	str+="</tr>";
+	for(var i=studentArray.length-1;i>=0;i--){
+		var student=studentArray[i];//배열에서 끄집어 내기
+		str+="<tr onClick=\"getDetail('"+student.name+"' , '"+student.loc+"' , "+student.money+")\">";
+		str+="<td>"+i+"</td>";
+		str+="<td>"+student.name+"</td>";
+		str+="<td>"+student.loc+"</td>";
+		str+="<td>"+student.money+"</td>";
+		str+="</tr>";
+	}
+	str+="</table>";
+	list_area.innerHTML=str;
+}
+
+addEventListener("load", function(){
+	init();
+});
+</script>
+</head>
+<body>
+	<div class="wrapper">
+		<div class="input_area">
+			<input type="text" placeholder="이름" id="m_name"/>
+			<input type="text" placeholder="지역" id="loc"/>
+			<input type="text" placeholder="낸돈" id="money"/>
+			<button onClick="regist()">등록</button>
+		</div>			
+		<div class="content">
+			<div class="search_area">
+				<select id="category">
+					<option>이름</option>
+					<option>지역</option>
+					<option>낸돈</option>
+				</select>
+				<input type="text" style="width:80%;" id="keyword"/>
+			</div>
+			<div id="list_area">리스트</div>
+		</div>
+		<div class="detail_area">
+			<input type="text" placeholder="이름" id="t_name"/>
+			<input type="text" placeholder="지역" id="t_loc"/>
+			<input type="text" placeholder="낸돈" id="t_money"/>
+			<button>삭제</button>
+			<button>수정</button>
+		</div>
+	<div>
+</body>
+</html>
