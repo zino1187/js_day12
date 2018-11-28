@@ -91,7 +91,7 @@ function getList(){
 	str+="</tr>";
 	for(var i=studentArray.length-1;i>=0;i--){
 		var student=studentArray[i];//배열에서 끄집어 내기
-		sum=sum+student.money;
+		sum=sum+parseInt(student.money);
 
 		str+="<tr onClick=\"getDetail("+i+", '"+student.name+"' , '"+student.loc+"' , "+student.money+")\">";
 		str+="<td>"+i+"</td>";
