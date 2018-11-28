@@ -7,33 +7,39 @@
 #stage{
 	width:600px;
 	height:500px;
-	background:yellow;
 	margin:auto;
 }
 </style>
 <script src="./Rect.js"></script>
 <script src="../lib/common.js"></script>
 <script>
-//ex) 2,7 -->  2~~6까지 나온다
-function getRandomByRange(min, max){
-	return parseInt(Math.random()*(max-min))+min;
-}
+
 var result=getRandomByRange(5,8);
 document.write(result);
 
 var stage;
 var color=["red","orange","yellow","green","blue","navy","purple"];
+var rect;
 
 function init(){
 	stage=document.getElementById("stage");
 	createRect();
+	gameLoop();
+	setTarget();
 }
 function createRect(){
 	var c=getRandom(color.length);
-
-	var rect = new Rect(stage, color[c], targetH);
+	var t=getRandomByRange(20,501);
+	rect = new Rect(stage, color[c], t);
+}
+//오직, 현재 문서에 등장한 사각형의 목표지점인 targetH 값을 
+//랜덤하게 지정한다!!!
+function setTarget(){
+	rect.targetH=getRandomByRange(20,501);
+	setTimeout("setTarget()",300);
 }
 function gameLoop(){
+	rect.move();
 	setTimeout("gameLoop()",10);
 }
 addEventListener("load",function(){
