@@ -42,7 +42,7 @@ function setTarget(){
 }
 function gameLoop(){
 	for(var i=0;i<rectArray.length;i++){
-		rect[i].move();
+		rectArray[i].move();
 	}
 	setTimeout("gameLoop()",10);
 }
